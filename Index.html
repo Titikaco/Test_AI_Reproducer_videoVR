@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mi aplicación de WebXR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <canvas id="xr-canvas" style="width: 100%; height: 100%; touch-action: none;" allow="camera; gyroscope;"></canvas>
+
+  <script>
+    // Inicializar la sesión de WebXR
+    navigator.xr.requestSession('immersive-vr').then(function(session) {
+      // Habilitar la presentación inmersiva en dispositivos móviles
+      session.isImmersive = true;
+
+      // Obtener una referencia al elemento <canvas>
+      var xrCanvas = document.getElementById('xr-canvas');
+
+      // Crear una referencia al contexto de renderizado de WebGL
+      var gl = xrCanvas.getContext('xrpresent');
+
+      // Crear un objeto XRPresentation para mostrar el contenido en el canvas
+      var xrPresentation = new XRPresentation(session, gl);
+
+      // Renderizar el contenido en el canvas
+      xrPresentation.render(new XRWebGLLayer(session, gl), new XRModel('https://drive.google.com/file/d/12a4RrvO6TXNfGHhVFyMHfeyqY-znntOh/view'));
+    });
+  </script>
+</body>
+</html>
